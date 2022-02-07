@@ -17,6 +17,7 @@
     "hardhat": "^2.8.3"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.2"
+    "@openzeppelin/contracts": "^4.4.2",
+    "base64-sol": "^1.1.0"
   }
 }
