@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "@openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "base64-sol/Base64.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "base64-sol/base64.sol";
 
 contract SVGNFT is ERC721URIStorage {
     uint256 tokenCounter;
