@@ -19,6 +19,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.2",
     "base64-sol": "^1.1.0",
+    "dotenv": "^16.0.0",
     "fs": "^0.0.1-security",
     "hardhat-deploy": "^0.10.4"
   }

@@ -18,14 +18,24 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+require("dotenv").config()
+const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL
+const MNEMONIC = process.env.MNEMONIC
+
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
-    // rinkeby: {
-    //accounts: {}
+    rinkeby: {
+      url: RINKEBY_RPC_URL,
+      accounts: {
+        accounts: {
+          mnemonic: MNEMONIC
+        }
+      },
+      saveDeployments: true
 
-    // }
+    }
   },
   namedAccounts: {
     deployer: {
