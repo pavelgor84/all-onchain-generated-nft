@@ -17,6 +17,7 @@
     "hardhat": "^2.8.3"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.3.1",
     "@nomiclabs/hardhat-etherscan": "^3.0.0",
     "@openzeppelin/contracts": "^4.4.2",
     "base64-sol": "^1.1.0",
