@@ -30,4 +30,4 @@ module.exports = async ({
     log(`You can view the NFT here: ${await svgNFT.tokenURI(0)}`)
 }
 
-
+module.exports.tags = ['all', 'svg']
