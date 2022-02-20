@@ -44,7 +44,7 @@ contract RandomSVG is ERC721URIStorage, VRFConsumerBase {
         maxNumberOfPath = 10;
         maxNumberOfPathCommands = 5;
         size = 500;
-        pathCommands = ["M", "L"];
+        //pathCommands = ["M", "L"];
         colors = ["red", "blue", "green", "yellow", "black", "white"];
     }
 
@@ -125,41 +125,53 @@ contract RandomSVG is ERC721URIStorage, VRFConsumerBase {
     {
         uint256 numberOfCommands = (_randomNumber % maxNumberOfPathCommands) +
             1;
-        string memory path = "<path d='";
+        uint256 startX = uint256(
+            keccak256(abi.encode(_randomNumber, size + 2))
+        ) % size;
+        uint256 startY = uint256(
+            keccak256(abi.encode(_randomNumber, size + 3))
+        ) % size;
+        pathSvg = string(
+            abi.encodePacked(
+                "<path d='M",
+                uint2str(startX),
+                " ",
+                uint2str(startY)
+            )
+        );
         for (uint256 i = 0; i < numberOfCommands; i++) {
             uint256 newRand = uint256(
-                keccak256(abi.encode(_randomNumber, size + 1))
+                keccak256(abi.encode(_randomNumber, size + i))
             );
             string memory pathCommand = generatePathCommand(newRand);
-            path = string(abi.encodePacked(path, pathCommand));
+            pathSvg = string(abi.encodePacked(pathSvg, pathCommand));
         }
         string memory color = colors[_randomNumber % colors.length];
-        path = string(
+        pathSvg = string(
             abi.encodePacked(
-                path,
-                "' fill='transparent' stroke='",
+                pathSvg,
+                " Z' fill='transparent' stroke='",
                 color,
                 "'/>"
             )
         );
     }
 
-    function generatePathCommand(uint256 _randomNumber)
+    function generatePathCommand(uint256 _newRand)
         public
         view
         returns (string memory pathCommand)
     {
-        pathCommand = pathCommands[_randomNumber % pathCommands.length];
+        //pathCommand = pathCommands[_randomNumber % pathCommands.length];
         uint256 parameterOne = uint256(
-            keccak256(abi.encode(_randomNumber, size * 2))
+            keccak256(abi.encode(_newRand, size + 12))
         ) % size;
         uint256 parameterTwo = uint256(
-            keccak256(abi.encode(_randomNumber, size * 3))
+            keccak256(abi.encode(_newRand, size + 4))
         ) % size;
         pathCommand = string(
             abi.encodePacked(
-                pathCommand,
-                " ",
+                " L",
                 uint2str(parameterOne),
                 " ",
                 uint2str(parameterTwo)
