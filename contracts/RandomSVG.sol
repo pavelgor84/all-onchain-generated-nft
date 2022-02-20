@@ -21,7 +21,7 @@ contract RandomSVG is ERC721URIStorage, VRFConsumerBase {
     mapping(bytes32 => address) public requestIdToUserAddress; //should be private
     mapping(bytes32 => uint256) public requestIdtoTokenId; //should be private
     mapping(uint256 => uint256) public tokenIdToRandomNumber; //should be private
-    event RequestRandomSVG(bytes32 indexed requestId, uint256 tokenId);
+    event RequestRandomSVG(bytes32 indexed requestId, uint256 indexed tokenId);
     event CreateUnfinishedRandomSVG(
         uint256 indexed tokenId,
         uint256 randomNumber
@@ -93,7 +93,7 @@ contract RandomSVG is ERC721URIStorage, VRFConsumerBase {
         string memory imageURI = svgToImageURI(svg);
         string memory tokenURI = formatTokenURI(imageURI);
         _setTokenURI(_tokenId, tokenURI);
-        emit TokenURIEvent(_tokenId, tokenURI);
+        emit TokenURIEvent(_tokenId, svg);
     }
 
     function generateSVG(uint256 _randomNumber)
@@ -103,7 +103,7 @@ contract RandomSVG is ERC721URIStorage, VRFConsumerBase {
         uint256 numberOfPaths = (_randomNumber % maxNumberOfPath) + 1;
         finalSvg = string(
             abi.encodePacked(
-                "'<svg xmlns='http://www.w3.org/2000/svg' height='",
+                "<svg xmlns='http://www.w3.org/2000/svg' height='",
                 uint2str(size),
                 "' width='",
                 uint2str(size),
@@ -135,7 +135,12 @@ contract RandomSVG is ERC721URIStorage, VRFConsumerBase {
         }
         string memory color = colors[_randomNumber % colors.length];
         path = string(
-            abi.encodePacked(path, "' fill='transparent' stroke='", color, "'>")
+            abi.encodePacked(
+                path,
+                "' fill='transparent' stroke='",
+                color,
+                "'/>"
+            )
         );
     }
 

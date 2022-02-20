@@ -28,6 +28,7 @@ module.exports = async ({
     let receip = await transactinResponse.wait(1)
     log(`You have made an NFT`)
     log(`You can view the NFT here: ${await svgNFT.tokenURI(0)}`)
+    log(`EVENT: ${JSON.stringify(receip.events)}`)
 }
 
 module.exports.tags = ['all', 'svg']
